@@ -15,5 +15,6 @@ use Symfony\Component\Console\Application;
 $application = new Application();
 
 $application->add(new \Railken\Advent2020\Day1\PuzzleACommand());
+$application->add(new \Railken\Advent2020\Day1\PuzzleBCommand());
 $application->run();
 
