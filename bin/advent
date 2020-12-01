@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+$composerAutoloadFile = __DIR__ . '/../vendor/autoload.php';
+if (!is_file($composerAutoloadFile)) {
+	$composerAutoloadFile = __DIR__ . '/../../../autoload.php';
+}
+require_once $composerAutoloadFile;
+$autoloaderInWorkingDirectory = getcwd() . '/vendor/autoload.php';
+if (is_file($autoloaderInWorkingDirectory)) {
+	require_once $autoloaderInWorkingDirectory;
+}
+
+use Symfony\Component\Console\Application;
+
+$application = new Application();
+
+$application->add(new \Railken\Advent2020\Day1\PuzzleACommand());
+$application->run();
+
