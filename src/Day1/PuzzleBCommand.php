@@ -48,18 +48,9 @@ class PuzzleBCommand extends Command
             return intval($row);
         });
 
-        $result = null;
+        $invertedSort = $rows->sort()->values()->toArray();
 
-        foreach ($rows as $row1) {
-            foreach ($rows as $row2) {
-                foreach ($rows as $row3) {
-                    if ($row1 + $row2 + $row3 === 2020) {
-                        $result = $row1*$row2*$row3;
-                        break;
-                    }
-                }
-            }
-        }
+        $result = $this->getResult($invertedSort);
 
         if (!$result) {
             $output->write("<error>No match found</error>");
@@ -69,5 +60,22 @@ class PuzzleBCommand extends Command
         $output->write("<info>$result</info>");
 
         return 0;
+    }
+
+    protected function getResult($rows)
+    {
+        $length = count($rows);
+
+        for ($x1 = 0; $x1 < $length; $x1++) {
+            for ($x2 = 0; $x2 < $length; $x2++) {
+                for ($x3 = 0; $x3 < $length; $x3++) {
+                    if ($rows[$x1] + $rows[$x2] + $rows[$x3] === 2020) {
+                        return $rows[$x1] * $rows[$x2] * $rows[$x3];
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 }
