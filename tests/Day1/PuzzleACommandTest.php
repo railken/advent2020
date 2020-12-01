@@ -9,7 +9,7 @@ use Railken\Advent2020\Tests\BaseTest;
 
 class PuzzleACommandTest extends BaseTest
 {
-    public function testCycle()
+    public function testDay1PuzzleA()
     {
         $application = new Application();
 
@@ -17,16 +17,17 @@ class PuzzleACommandTest extends BaseTest
 
         $command = $application->find('day1:puzzleA');
         $commandTester = new CommandTester($command);
+
         $commandTester->setInputs([
-            'something'
         ]);
 
         $commandTester->execute([
-            'command' => $command->getName()
+            'command' => $command->getName(),
+            'path' => __DIR__."/input.txt"
         ]);
 
         $output = $commandTester->getDisplay();
 
-        $this->assertEquals(1, 1);
+        $this->assertEquals("1007331", $output);
     }
 }
