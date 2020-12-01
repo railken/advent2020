@@ -9,13 +9,16 @@ use Railken\Advent2020\Tests\BaseTest;
 
 class Day1CommandTest extends BaseTest
 {
-    public function testDay1PuzzleA()
-    {
+    public function commonDay($path) {
+
+        $start = microtime(true);
+        print_r("\n\n$path: ");
         $application = new Application();
 
         $application->add(new \Railken\Advent2020\Day1\PuzzleACommand());
+        $application->add(new \Railken\Advent2020\Day1\PuzzleBCommand());
 
-        $command = $application->find('day1:puzzleA');
+        $command = $application->find($path);
         $commandTester = new CommandTester($command);
 
         $commandTester->setInputs([
@@ -26,30 +29,20 @@ class Day1CommandTest extends BaseTest
             'path' => __DIR__."/input.txt"
         ]);
 
-        $output = $commandTester->getDisplay();
+        $end = microtime(true);
 
-        $this->assertEquals("1007331", $output);
+        print_r($end - $start ."s\n");
+
+        return $commandTester->getDisplay();
+    }
+
+    public function testDay1PuzzleA()
+    {
+        $this->assertEquals("1007331", $this->commonDay('day1:puzzleA')); // ~ 0.01 sec
     }
 
     public function testDay1PuzzleB()
     {
-        $application = new Application();
-
-        $application->add(new \Railken\Advent2020\Day1\PuzzleBCommand());
-
-        $command = $application->find('day1:puzzleB');
-        $commandTester = new CommandTester($command);
-
-        $commandTester->setInputs([
-        ]);
-
-        $commandTester->execute([
-            'command' => $command->getName(),
-            'path' => __DIR__."/input.txt"
-        ]);
-
-        $output = $commandTester->getDisplay();
-
-        $this->assertEquals("48914340", $output);
+        $this->assertEquals("48914340", $this->commonDay('day1:puzzleB')); // ~1.15 sec
     }
 }
