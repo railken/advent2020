@@ -48,16 +48,9 @@ class PuzzleACommand extends Command
             return intval($row);
         });
 
-        $result = null;
+        $invertedSort = $rows->sort()->values()->toArray();
 
-        foreach ($rows as $row1) {
-            foreach ($rows as $row2) {
-                if ($row1 + $row2 === 2020) {
-                    $result = $row1*$row2;
-                    break;
-                }
-            }
-        }
+        $result = $this->getResult($rows);
 
         if (!$result) {
             $output->write("<error>No match found</error>");
@@ -67,5 +60,17 @@ class PuzzleACommand extends Command
         $output->write("<info>$result</info>");
 
         return 0;
+    }
+
+    public function getResult($rows)
+    {
+        foreach ($rows as $row1) {
+            foreach ($rows as $row2) {
+                if ($row1 + $row2 === 2020) {
+                    return $row1*$row2;
+                }
+            }
+        }
+
     }
 }

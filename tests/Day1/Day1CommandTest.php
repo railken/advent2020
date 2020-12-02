@@ -38,11 +38,11 @@ class Day1CommandTest extends BaseTest
 
     public function testDay1PuzzleA()
     {
-        $this->assertEquals("1007331", $this->commonDay('day1:puzzleA')); // ~ 0.01 sec
+        $this->assertEquals("1007331", $this->commonDay('day1:puzzleA')); // ~ 0.009 sec
     }
 
     public function testDay1PuzzleB()
     {
-        $this->assertEquals("48914340", $this->commonDay('day1:puzzleB')); // ~1.15 sec
+        $this->assertEquals("48914340", $this->commonDay('day1:puzzleB')); // ~0.011 sec
     }
 }
