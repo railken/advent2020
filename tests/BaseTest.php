@@ -25,11 +25,10 @@ abstract class BaseTest extends TestCase
         }
 
         mkdir($dir, 0777, true);
-    } 
+    }
     
     public function commonDay($path, $file)
     {
-
         $application = new Application();
 
         $application->add(new \Railken\Advent2020\Day1\PuzzleACommand());
@@ -46,7 +45,6 @@ abstract class BaseTest extends TestCase
         $total = 10;
 
         for ($i = 0; $i < $total; $i++) {
-
             $start = microtime(true);
 
             $commandTester->execute([

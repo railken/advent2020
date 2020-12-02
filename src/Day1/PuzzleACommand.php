@@ -71,6 +71,5 @@ class PuzzleACommand extends Command
                 }
             }
         }
-
     }
 }
