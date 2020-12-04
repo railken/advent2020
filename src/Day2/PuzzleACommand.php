@@ -9,7 +9,7 @@ class PuzzleACommand extends BaseCommand
 {
     protected $name = 'day2:puzzleA';
 
-    protected function parseFile(string $content): Collection
+    protected function mapInput(string $content): Collection
     {
         $rows = Collection::make(explode("\n", $content));
 

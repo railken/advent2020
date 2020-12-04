@@ -26,7 +26,7 @@ abstract class BaseCommand extends Command
             return 1;
         }
 
-        $result = $this->getResult($this->parseFile(file_get_contents($input->getArgument('path'))));
+        $result = $this->getResult($this->mapInput(file_get_contents($input->getArgument('path'))));
 
         if (!$result) {
             $output->write('<error>No match found</error>');
@@ -41,5 +41,5 @@ abstract class BaseCommand extends Command
 
     abstract protected function getResult(Collection $rows);
 
-    abstract protected function parseFile(string $content): Collection;
+    abstract protected function mapInput(string $content): Collection;
 }

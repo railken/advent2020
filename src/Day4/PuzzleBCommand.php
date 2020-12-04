@@ -7,9 +7,21 @@ use Railken\Advent2020\BaseCommand;
 
 class PuzzleBCommand extends BaseCommand
 {
+    /**
+     * Name of the command
+     *
+     * @var string
+     */
     protected $name = 'day4:puzzleB';
 
-    protected function parseFile(string $content): Collection
+    /**
+     * Convert input file into a Collection
+     *
+     * @param string $content
+     *
+     * @return Collection
+     */
+    protected function mapInput(string $content): Collection
     {
         $rows = Collection::make(preg_split("/(\r\n|\r|\n)(\r\n|\r|\n)/", $content));
 
@@ -28,6 +40,13 @@ class PuzzleBCommand extends BaseCommand
         });
     }
 
+    /**
+     * Resolve puzzle given collection
+     *
+     * @param Collection $rows
+     *
+     * @return mixed
+     */
     protected function getResult(Collection $rows)
     {
         $required = ['ecl', 'pid', 'eyr', 'hcl', 'byr', 'iyr', 'hgt'];

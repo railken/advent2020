@@ -7,18 +7,32 @@ use Railken\Advent2020\BaseCommand;
 
 class PuzzleACommand extends BaseCommand
 {
+    /**
+     * Name of the command
+     *
+     * @var string
+     */
     protected $name = 'day3:puzzleA';
 
-    protected function parseFile(string $content): Collection
+    /**
+     * Convert input file into a Collection
+     *
+     * @param string $content
+     *
+     * @return Collection
+     */
+    protected function mapInput(string $content): Collection
     {
         return Collection::make(explode("\n", $content));
     }
 
-    protected function getIndex($i, $max)
-    {
-        return $i % $max;
-    }
-
+    /**
+     * Resolve puzzle given collection
+     *
+     * @param Collection $rows
+     *
+     * @return mixed
+     */
     protected function getResult(Collection $rows)
     {
         $col = 0;
@@ -38,5 +52,10 @@ class PuzzleACommand extends BaseCommand
         }
 
         return $n;
+    }
+
+    protected function getIndex($i, $max)
+    {
+        return $i % $max;
     }
 }
