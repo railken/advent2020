@@ -10,40 +10,17 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Illuminate\Support\Collection;
+use Railken\Advent2020\BaseCommand;
 
-class PuzzleBCommand extends Command
+class PuzzleBCommand extends BaseCommand
 {
-    /**
-     * @var \Eloquent\Composer\Configuration\ConfigurationReader
-     */
-    protected $composerReader;
+    protected $name = 'day2:puzzleB';
 
-    /**
-     * Create a new instance of the command.
-     */
-    public function __construct()
+    protected function parseFile(string $content): Collection
     {
-        parent::__construct();
-    }
+        $rows = Collection::make(explode("\n", $content));
 
-    protected function configure()
-    {
-        $this
-            ->setName('day2:puzzleB')
-            ->addArgument('path', InputArgument::REQUIRED, 'The path of the input.txt files containing all records')
-        ;
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        if (!file_exists($input->getArgument('path'))) {
-            $output->write("<error>File doesn't exists</error>");
-            return 1;
-        }
-
-        $rows = Collection::make(explode("\n", file_get_contents($input->getArgument('path'))));
-
-        $rows = $rows->map(function ($row) {
+        return $rows->map(function ($row) {
             preg_match_all("/^([\d]*)-([\d]*) ([\w]{1})\: ([\w]*)$/", $row, $result);
 
 
@@ -51,20 +28,9 @@ class PuzzleBCommand extends Command
         })->filter(function ($i) {
             return isset($i[0]);
         });
-
-        $result = $this->getResult($rows);
-
-        if (!$result) {
-            $output->write("<error>No match found</error>");
-            return 1;
-        }
-
-        $output->write("<info>$result</info>");
-
-        return 0;
     }
 
-    public function getResult($rows)
+    protected function getResult(Collection $rows)
     {
         // 0 min
         // 1 max

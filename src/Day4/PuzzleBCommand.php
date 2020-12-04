@@ -10,46 +10,21 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Illuminate\Support\Collection;
+use Railken\Advent2020\BaseCommand;
 
-class PuzzleBCommand extends Command
+class PuzzleBCommand extends BaseCommand
 {
-    /**
-     * @var \Eloquent\Composer\Configuration\ConfigurationReader
-     */
-    protected $composerReader;
+    protected $name = 'day4:puzzleB';
 
-    /**
-     * Create a new instance of the command.
-     */
-    public function __construct()
+    protected function parseFile(string $content): Collection
     {
-        parent::__construct();
-    }
-
-    protected function configure()
-    {
-        $this
-            ->setName('day4:puzzleB')
-            ->addArgument('path', InputArgument::REQUIRED, 'The path of the input.txt files containing all records')
-        ;
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        if (!file_exists($input->getArgument('path'))) {
-            $output->write("<error>File doesn't exists</error>");
-            return 1;
-        }
-
-        $rows = Collection::make(preg_split("/(\r\n|\r|\n)(\r\n|\r|\n)/", file_get_contents($input->getArgument('path'))));
-
+        $rows = Collection::make(preg_split("/(\r\n|\r|\n)(\r\n|\r|\n)/", $content));
 
         $rows = $rows->map(function($i) {
             return preg_split("/(\r\n|\r|\n| )/", $i);
         });
 
-
-        $rows = $rows->map(function($i) {
+        return $rows->map(function($i) {
             return collect($i)->filter(function($r) {
                 return !empty($r);
             })->mapWithKeys(function ($r) {
@@ -59,20 +34,9 @@ class PuzzleBCommand extends Command
                 return [$key => $value];
             });
         });
-
-        $result = $this->getResult($rows);
-
-        if (!$result) {
-            $output->write("<error>No match found</error>");
-            return 1;
-        }
-
-        $output->write("<info>$result</info>");
-
-        return 0;
     }
 
-    public function getResult($rows)
+    protected function getResult(Collection $rows)
     {
         $required = ['ecl', 'pid', 'eyr', 'hcl', 'byr', 'iyr', 'hgt'];
         return $rows->filter(function ($row) use ($required) {

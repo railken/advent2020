@@ -10,57 +10,23 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Illuminate\Support\Collection;
+use Railken\Advent2020\BaseCommand;
 
-class PuzzleBCommand extends Command
+class PuzzleBCommand extends BaseCommand
 {
-    /**
-     * @var \Eloquent\Composer\Configuration\ConfigurationReader
-     */
-    protected $composerReader;
+    protected $name = 'day3:puzzleB';
 
-    /**
-     * Create a new instance of the command.
-     */
-    public function __construct()
+    protected function parseFile(string $content): Collection
     {
-        parent::__construct();
+        return Collection::make(explode("\n", $content));
     }
 
-    protected function configure()
-    {
-        $this
-            ->setName('day3:puzzleB')
-            ->addArgument('path', InputArgument::REQUIRED, 'The path of the input.txt files containing all records')
-        ;
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        if (!file_exists($input->getArgument('path'))) {
-            $output->write("<error>File doesn't exists</error>");
-            return 1;
-        }
-
-        $rows = Collection::make(explode("\n", file_get_contents($input->getArgument('path'))));
-
-        $result = $this->getResult($rows);
-
-        if (!$result) {
-            $output->write("<error>No match found</error>");
-            return 1;
-        }
-
-        $output->write("<info>$result</info>");
-
-        return 0;
-    }
-
-    public function getIndex($i, $max)
+    protected function getIndex($i, $max)
     {
         return $i % $max;
     }
 
-    public function getResult($rows)
+    protected function getResult(Collection $rows)
     {
         $options = collect([
             [1,1],

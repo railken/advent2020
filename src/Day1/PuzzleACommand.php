@@ -10,59 +10,24 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 use Illuminate\Support\Collection;
+use Railken\Advent2020\BaseCommand;
 
-class PuzzleACommand extends Command
+class PuzzleACommand extends BaseCommand
 {
-    /**
-     * @var \Eloquent\Composer\Configuration\ConfigurationReader
-     */
-    protected $composerReader;
+    protected $name = 'day1:puzzleA';
 
-    /**
-     * Create a new instance of the command.
-     */
-    public function __construct()
+    protected function parseFile(string $content): Collection
     {
-        parent::__construct();
-    }
-
-    protected function configure()
-    {
-        $this
-            ->setName('day1:puzzleA')
-            ->setDescription('Specifically, they need you to find the two entries that sum to 2020 and then multiply those two numbers together.')
-            ->addArgument('path', InputArgument::REQUIRED, 'The path of the input.txt files containing all records')
-        ;
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        if (!file_exists($input->getArgument('path'))) {
-            $output->write("<error>File doesn't exists</error>");
-            return 1;
-        }
-
-        $rows = Collection::make(explode("\n", file_get_contents($input->getArgument('path'))));
+        $rows = Collection::make(explode("\n", $content));
 
         $rows = $rows->map(function ($row) {
             return intval($row);
         });
 
-        $invertedSort = $rows->sort()->values()->toArray();
-
-        $result = $this->getResult($rows);
-
-        if (!$result) {
-            $output->write("<error>No match found</error>");
-            return 1;
-        }
-
-        $output->write("<info>$result</info>");
-
-        return 0;
+        return $rows->sort()->values();
     }
 
-    public function getResult($rows)
+    protected function getResult(Collection $rows)
     {
         foreach ($rows as $row1) {
             foreach ($rows as $row2) {
