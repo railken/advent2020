@@ -2,13 +2,6 @@
 
 namespace Railken\Advent2020\Day1;
 
-use Eloquent\Composer\Configuration\ConfigurationReader;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Output\OutputInterface;
 use Illuminate\Support\Collection;
 use Railken\Advent2020\BaseCommand;
 
@@ -30,12 +23,12 @@ class PuzzleBCommand extends BaseCommand
     protected function getResult(Collection $rows)
     {
         $rows = $rows->toArray();
-        
+
         $length = count($rows);
 
-        for ($x1 = 0; $x1 < $length; $x1++) {
-            for ($x2 = 0; $x2 < $length; $x2++) {
-                for ($x3 = 0; $x3 < $length; $x3++) {
+        for ($x1 = 0; $x1 < $length; ++$x1) {
+            for ($x2 = 0; $x2 < $length; ++$x2) {
+                for ($x3 = 0; $x3 < $length; ++$x3) {
                     if ($rows[$x1] + $rows[$x2] + $rows[$x3] === 2020) {
                         return $rows[$x1] * $rows[$x2] * $rows[$x3];
                     }

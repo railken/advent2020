@@ -5,7 +5,6 @@ namespace Railken\Advent2020\Tests;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\Process\Process;
 
 abstract class BaseTest extends TestCase
 {
@@ -26,7 +25,7 @@ abstract class BaseTest extends TestCase
 
         mkdir($dir, 0777, true);
     }
-    
+
     public function commonDay($path, $file)
     {
         $application = new Application();
@@ -44,18 +43,17 @@ abstract class BaseTest extends TestCase
         $commandTester = new CommandTester($command);
 
         $commandTester->setInputs([
-        
         ]);
 
         $diff = 0;
         $total = 10;
 
-        for ($i = 0; $i < $total; $i++) {
+        for ($i = 0; $i < $total; ++$i) {
             $start = microtime(true);
 
             $commandTester->execute([
                 'command' => $command->getName(),
-                'path' => $file
+                'path'    => $file,
             ]);
 
             $end = microtime(true);
@@ -63,8 +61,7 @@ abstract class BaseTest extends TestCase
             $diff += $end - $start;
         }
 
-
-        print_r("\n\n<Name:'$path'> <AVG:".number_format($diff/$total, 8)."s> <Total:".$total.">\n");
+        print_r("\n\n<Name:'$path'> <AVG:".number_format($diff / $total, 8).'s> <Total:'.$total.">\n");
 
         return $commandTester->getDisplay();
     }

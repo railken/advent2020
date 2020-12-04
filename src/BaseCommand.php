@@ -2,14 +2,11 @@
 
 namespace Railken\Advent2020;
 
-use Eloquent\Composer\Configuration\ConfigurationReader;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Output\OutputInterface;
 use Illuminate\Support\Collection;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class BaseCommand extends Command
 {
@@ -25,13 +22,15 @@ abstract class BaseCommand extends Command
     {
         if (!file_exists($input->getArgument('path'))) {
             $output->write("<error>File doesn't exists</error>");
+
             return 1;
         }
 
         $result = $this->getResult($this->parseFile(file_get_contents($input->getArgument('path'))));
 
         if (!$result) {
-            $output->write("<error>No match found</error>");
+            $output->write('<error>No match found</error>');
+
             return 1;
         }
 
