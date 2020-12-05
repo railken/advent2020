@@ -38,6 +38,8 @@ abstract class BaseTest extends TestCase
         $application->add(new \Railken\Advent2020\Day3\PuzzleBCommand());
         $application->add(new \Railken\Advent2020\Day4\PuzzleACommand());
         $application->add(new \Railken\Advent2020\Day4\PuzzleBCommand());
+        $application->add(new \Railken\Advent2020\Day5\PuzzleACommand());
+        $application->add(new \Railken\Advent2020\Day5\PuzzleBCommand());
 
         $command = $application->find($path);
         $commandTester = new CommandTester($command);
